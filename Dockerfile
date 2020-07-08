@@ -1,14 +1,25 @@
-FROM debian
-LABEL maintainer="jason@jasongwartz.com"
+FROM mono:slim
+LABEL maintainer="saejinmh@gmail.com"
 
-RUN apt-get update
-RUN apt-get -y install mono-complete libcurl4-openssl-dev
-RUN apt-get -y install wget
-RUN wget -O /ckan.exe https://github.com/KSP-CKAN/CKAN/releases/download/v1.22.3/ckan.exe
-RUN mkdir /kerbal
+RUN set -ex && \
+  mkdir -p /opt/ckan /kerbal && \
+  curl -Lo /opt/ckan/ckan.exe https://github.com/KSP-CKAN/CKAN/releases/latest/download/ckan.exe && \
+  echo 'mono /opt/ckan/ckan.exe $@' > /usr/local/bin/ckan && \
+  chmod +x /usr/local/bin/ckan && \
+  echo 'ckan ksp add default-kerbal /kerbal/' >> /etc/bash.bashrc && \
+  echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc && \
+  echo "\
+====================================================================\n\
+= The Comprehensive Kerbal Archive Network (CKAN) Docker Container =\n\
+====================================================================\n\
+\n\
+Using CKAN version $(ckan version)\n\
+Ensure your KSP directory is mounted to /kerbal;\n\
+This can be done by adding this docker argument:\n\
+--mount type=bind,source=/path/to/ksp/directory,target=/kerbal\n\
+\n\
+GUI commands require x11docker or an exposed X-Server.\n\
+Execute ckan commands against the mounted KSP directory by\n\
+issuing 'ckan' followed by your ckan arguments.\n" > /etc/motd
 
-COPY $PWD/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-
-CMD bash
+CMD ["/bin/bash"]
