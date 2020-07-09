@@ -1,11 +1,12 @@
-===================================================
-= The Comprehensive Kerbal Archive Network (CKAN) =
-===================================================
-
-Ensure your KSP directory is mounted to /kerbal;
-This can be done by adding this docker argument:
---mount type=bind,source=/path/to/ksp,target=/kerbal
-
-GUI commands require x11docker or an exposed X-Server.
-Execute ckan commands against the mounted KSP directory
-by issuing 'ckan' followed by your ckan arguments.
+|=========================================================|
+|===  The Comprehensive Kerbal Archive Network (CKAN)  ===|
+|=========================================================|
+|                                                         |
+| Update CKAN with 'update-ckan'; enter a ckan command    |
+| prompt with 'ckan prompt'.                              |
+|                                                         |
+| GUI commands require x11docker or an exposed X-Server.  |
+| Execute ckan commands against the mounted KSP directory |
+| by issuing 'ckan' followed by your ckan arguments.      |
+|                                                         |
+|=========================================================|
