@@ -1,6 +1,6 @@
 # Kerbal CKAN Docker Image
 
-![Docker Build Status](https://img.shields.io/docker/build/michionlion/kerbal-ckan)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/michionlion/kerbal-ckan)](https://hub.docker.com/r/michionlion/kerbal-ckan)
 
 This is a Debian-based Docker image for the [Comprehensive Kerbal Archive Network](https://github.com/KSP-CKAN/CKAN). It is built on top of the `mono:6.8` docker image.
 
