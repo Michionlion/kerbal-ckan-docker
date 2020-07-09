@@ -7,7 +7,7 @@ COPY entry.sh /etc/entry.sh
 # Install packages
 RUN set -ex && \
   apt-get update -qq && \
-  apt-get install -qq wget && \
+  apt-get install -qq wget sudo && \
   rm -rf /var/lib/apt/lists/*
 
 # Install CKAN
@@ -25,4 +25,4 @@ WORKDIR /kerbal
 
 ENTRYPOINT ["/etc/entry.sh"]
 
-CMD [ "bash" ]
+CMD ["bash"]
