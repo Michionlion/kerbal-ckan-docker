@@ -1,7 +1,7 @@
 # Kerbal CKAN Docker Image
 
 ![GitHub Docker Build Status](https://github.com/Michionlion/kerbal-ckan-docker/workflows/Docker/badge.svg)
-[![Docker Hub Build Status](https://img.shields.io/docker/cloud/build/michionlion/kerbal-ckan?label=Docker%20Hub&style=plastic)](https://hub.docker.com/r/michionlion/kerbal-ckan)
+[![Docker Hub Build Status](https://img.shields.io/docker/cloud/build/michionlion/kerbal-ckan?label=Docker%20Hub&style=flat)](https://hub.docker.com/r/michionlion/kerbal-ckan)
 
 This is a Debian-based Docker image for the
 [Comprehensive Kerbal Archive Network](https://github.com/KSP-CKAN/CKAN). It is
