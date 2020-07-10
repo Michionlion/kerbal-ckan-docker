@@ -1,14 +1,17 @@
 FROM mono:6.8
 LABEL maintainer="saejinmh@gmail.com"
 
-COPY motd /etc/motd
-COPY entry.sh /etc/entry.sh
+VOLUME /kerbal
+WORKDIR /kerbal
 
 # Install packages
 RUN set -ex && \
   apt-get update -qq && \
-  apt-get install -qq wget sudo && \
+  apt-get install -qq wget sudo libgtk2.0-bin && \
   rm -rf /var/lib/apt/lists/*
+
+COPY motd /etc/motd
+COPY entry.sh /etc/entry.sh
 
 # Install CKAN
 RUN set -ex && \
@@ -19,9 +22,6 @@ RUN set -ex && \
   chmod +x /etc/entry.sh && \
   echo "alias update-ckan='wget -O /opt/ckan/ckan.exe https://github.com/KSP-CKAN/CKAN/releases/latest/download/ckan.exe'" >> /etc/bash.bashrc
 
-
-VOLUME /kerbal
-WORKDIR /kerbal
 
 ENTRYPOINT ["/etc/entry.sh"]
 
