@@ -11,15 +11,35 @@ echo ">>> Using CKAN version $(ckan version)"
 
 echo ">>> Setting up..."
 
-buildID=$(find / \
+readarray -d '' buildIDs < <(find / \
   -not \( -path /proc -prune \) \
   -not \( -path /usr -prune \) \
   -not \( -path /var -prune \) \
   -not \( -path /etc -prune \) \
   -not \( -path /root -prune \) \
-  -name buildID.txt | head -n 1)
+  -not \( -path /run -prune \) \
+  -not \( -path /tmp -prune \) \
+  -not \( -path /sys -prune \) \
+  -not \( -path /dev -prune \) \
+  -name buildID.txt -print0)
 
-if [ -z "$buildID" ]; then
+for i in "${!buildIDs[@]}"; do
+  buildIDs[$i]=$(dirname ${buildIDs[$i]})
+done
+
+PS3="#? "
+kerbal="";
+if ((${#buildIDs[@]}==1)); then
+  kerbal=${buildIDs[0]}
+else
+  echo "Choose which KSP directory to use as the default:"
+  select file in "${buildIDs[@]}"; do
+    kerbal=$file
+    break
+  done
+fi
+
+if [ -z "$kerbal" ]; then
   echo "No buildID.txt found, did you mount your KSP directory?"
   echo "Use '--mount type=bind,source=<KSP_PATH>,target=/kerbal' in"
   echo "your 'docker run' command, and replace <KSP_PATH>."
@@ -27,9 +47,7 @@ if [ -z "$buildID" ]; then
   echo "'ckan' is still available, but you will have no KSP to work with."
   exec_user=root
 else
-  kerbal=$(dirname "$buildID")
-  
-  echo "Found $buildID, using $kerbal as KSP directory"
+  echo "Using $kerbal as default KSP directory"
 
   gid=$(stat -c '%g' "$kerbal/GameData")
   uid=$(stat -c '%u' "$kerbal/GameData")
