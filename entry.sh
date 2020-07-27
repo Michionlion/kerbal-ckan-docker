@@ -17,7 +17,7 @@ buildID=$(find / \
   -not \( -path /var -prune \) \
   -not \( -path /etc -prune \) \
   -not \( -path /root -prune \) \
-  -name buildID.txt)
+  -name buildID.txt | head -n 1)
 
 if [ -z "$buildID" ]; then
   echo "No buildID.txt found, did you mount your KSP directory?"
